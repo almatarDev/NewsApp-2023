@@ -5,6 +5,7 @@ import 'package:newsapp/modules/business/business_screen.dart';
 import 'package:newsapp/modules/science/science_screen.dart';
 import 'package:newsapp/modules/settings/settings_screen.dart';
 import 'package:newsapp/modules/sports/sports_screen.dart';
+import 'package:newsapp/shared/network/local/cach_helper.dart';
 import 'package:newsapp/shared/network/remote/dio_helper.dart';
 
 class NewsCubit extends Cubit<NewsStates> {
@@ -53,6 +54,23 @@ class NewsCubit extends Cubit<NewsStates> {
     if (index == 1) getSports();
     if (index == 2) getScience();
     emit(NewsBottomSheetState());
+  }
+
+//change thememode
+
+  bool isDark = false;
+  void changeThemeMode({
+    bool? fromShared,
+  }) {
+    if (fromShared != null) {
+      isDark = fromShared;
+      emit(NewsChangeThemeModeState());
+    } else {
+      isDark = !isDark;
+      CachHelper.putBool(key: 'isDark', value: isDark).then((value) {
+        emit(NewsChangeThemeModeState());
+      });
+    }
   }
 
   List<dynamic> business = [];

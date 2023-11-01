@@ -1,45 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newsapp/layout/cubit/cubit.dart';
+import 'package:newsapp/layout/cubit/states.dart';
 import 'package:newsapp/layout/news_layout.dart';
+import 'package:newsapp/shared/network/local/cach_helper.dart';
 import 'package:newsapp/shared/network/remote/dio_helper.dart';
+import 'package:newsapp/shared/network/style/mytheme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DioHelper.init();
-  runApp(const MyApp());
+  await CachHelper.init();
+  bool isDark = CachHelper.getBool(key: 'isDark') ?? false;
+  runApp(MyApp(
+    isDark: isDark,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isDark;
+  const MyApp({super.key, required this.isDark});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 17.0,
-            fontWeight: FontWeight.bold,
-          ),
-          actionsIconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarIconBrightness: Brightness.dark,
-            statusBarColor: Colors.white,
-          ),
-          scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          selectedItemColor: Colors.teal,
-          elevation: 20.0,
-        ),
+    return BlocProvider(
+      create: (context) => NewsCubit()
+        ..getBusiness()
+        ..changeThemeMode(fromShared: isDark),
+      child: BlocConsumer<NewsCubit, NewsStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          var cubit = NewsCubit.get(context);
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: cubit.isDark ? ThemeMode.dark : ThemeMode.light,
+            home: const NewsLayout(),
+          );
+        },
       ),
-      home: const NewsLayout(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/layout/cubit/cubit.dart';
 
 Widget buildArticleItem(article, context) => Padding(
       padding: const EdgeInsets.all(20.0),
@@ -29,18 +30,23 @@ Widget buildArticleItem(article, context) => Padding(
                   Expanded(
                     child: Text(
                       '${article['title']}',
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(
+                          color: NewsCubit.get(context).isDark
+                              ? Colors.white
+                              : Colors.black,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w600),
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
                     '${article['publishedAt']}',
-                    style: const TextStyle(
-                      color: Colors.grey,
+                    style: TextStyle(
+                      color: NewsCubit.get(context).isDark
+                          ? Colors.white
+                          : Colors.grey.shade300,
+                      fontSize: 15.0,
                     ),
                   ),
                 ],

@@ -40,3 +40,5 @@ class NewsGetScienceErrorState extends NewsStates {
     required this.error,
   });
 }
+
+class NewsChangeThemeModeState extends NewsStates {}

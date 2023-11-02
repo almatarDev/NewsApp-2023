@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/layout/cubit/states.dart';
 import 'package:newsapp/modules/business/business_screen.dart';
 import 'package:newsapp/modules/science/science_screen.dart';
-import 'package:newsapp/modules/settings/settings_screen.dart';
 import 'package:newsapp/modules/sports/sports_screen.dart';
 import 'package:newsapp/shared/network/local/cach_helper.dart';
 import 'package:newsapp/shared/network/remote/dio_helper.dart';
@@ -34,19 +33,12 @@ class NewsCubit extends Cubit<NewsStates> {
       ),
       label: 'Science',
     ),
-    const BottomNavigationBarItem(
-      icon: Icon(
-        Icons.settings,
-      ),
-      label: 'Settings',
-    ),
   ];
 
   List<Widget> screens = [
     const BusinessScreen(),
     const SportsScreen(),
     const ScienceScreen(),
-    const SettingsScreen(),
   ];
 
   void changeNavBar(index) {
@@ -138,6 +130,27 @@ class NewsCubit extends Cubit<NewsStates> {
       print('my data is ${value.data['articles'].toString()}');
     }).catchError((error) {
       emit(NewsGetScienceErrorState(error: error.toString()));
+      print(error.toString());
+    });
+  }
+
+  //get search
+  List<dynamic> search = [];
+
+  void getSearch(String value) {
+    emit(NewsGetSearchLoadingState());
+    DioHelper.getData(
+      url: 'https://newsapi.org/v2/everything',
+      query: {
+        'q': value,
+        'apiKey': '372ac5c8751f4bb0a0624f15df043f98',
+      },
+    ).then((value) {
+      search = value.data['articles'];
+      emit(NewsGetSearchSuccessState());
+      print('my data is ${value.data['articles'].toString()}');
+    }).catchError((error) {
+      emit(NewsGetSearchErrorState(error: error.toString()));
       print(error.toString());
     });
   }

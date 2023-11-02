@@ -41,4 +41,16 @@ class NewsGetScienceErrorState extends NewsStates {
   });
 }
 
+//get search
+class NewsGetSearchLoadingState extends NewsStates {}
+
+class NewsGetSearchSuccessState extends NewsStates {}
+
+class NewsGetSearchErrorState extends NewsStates {
+  final String error;
+  NewsGetSearchErrorState({
+    required this.error,
+  });
+}
+
 class NewsChangeThemeModeState extends NewsStates {}

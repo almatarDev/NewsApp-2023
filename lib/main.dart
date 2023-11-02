@@ -5,7 +5,7 @@ import 'package:newsapp/layout/cubit/states.dart';
 import 'package:newsapp/layout/news_layout.dart';
 import 'package:newsapp/shared/network/local/cach_helper.dart';
 import 'package:newsapp/shared/network/remote/dio_helper.dart';
-import 'package:newsapp/shared/network/style/mytheme.dart';
+import 'package:newsapp/shared/style/mytheme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

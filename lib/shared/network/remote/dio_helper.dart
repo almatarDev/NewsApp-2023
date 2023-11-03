@@ -22,12 +22,5 @@ class DioHelper {
     );
   }
 }
-
-
-
-////https://newsapi.org/v2/top-headlines?sources=google-news-sa&apiKey=372ac5c8751f4bb0a0624f15df043f98
-//base url : https://newsapi.org/v2/top-headlines
-//method(url):country=eg&category=sports&category=business
-//key(url):372ac5c8751f4bb0a0624f15df043f98
-
-/*https://newsapi.org/v2/top-headlines?country=eg&category=sports&category=business&apiKey=372ac5c8751f4bb0a0624f15df043f98*/
+ /*url Api
+https://newsapi.org/v2/top-headlines?country=eg&category=sports&category=business&apiKey=372ac5c8751f4bb0a0624f15df043f98*/

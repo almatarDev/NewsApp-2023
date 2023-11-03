@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/layout/cubit/cubit.dart';
 import 'package:newsapp/layout/cubit/states.dart';
-import 'package:newsapp/shared/component.dart';
+import 'package:newsapp/shared/component/component.dart';
 
 class ScienceScreen extends StatelessWidget {
   const ScienceScreen({super.key});

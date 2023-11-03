@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/layout/cubit/cubit.dart';
 import 'package:newsapp/layout/cubit/states.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-
-import '../../shared/component.dart';
+import 'package:newsapp/shared/component/component.dart';
 
 class BusinessScreen extends StatelessWidget {
   const BusinessScreen({super.key});

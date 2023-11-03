@@ -1,65 +1,76 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:newsapp/layout/cubit/cubit.dart';
+import 'package:newsapp/modules/webview/webview_screen.dart';
 
 Widget buildArticleItem(
   article,
-  context, {
-  bool isSearch = false,
-}) =>
-    Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Row(
-        children: [
-          Container(
-            height: 130,
-            width: 130,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              image: DecorationImage(
-                image: NetworkImage('${article['urlToImage']}'),
-                fit: BoxFit.cover,
+  context,
+) =>
+    InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WebViewScreen(
+                url: article['url'],
+              ),
+            ));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            Container(
+              height: 130,
+              width: 130,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                image: DecorationImage(
+                  image: NetworkImage('${article['urlToImage']}'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 20.0,
-          ),
-          Expanded(
-            child: SizedBox(
-              height: 120.0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      '${article['title']}',
+            const SizedBox(
+              width: 20.0,
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 120.0,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${article['title']}',
+                        style: TextStyle(
+                            color: NewsCubit.get(context).isDark
+                                ? Colors.white
+                                : Colors.black,
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.w600),
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Text(
+                      '${article['publishedAt']}',
                       style: TextStyle(
-                          color: NewsCubit.get(context).isDark
-                              ? Colors.white
-                              : Colors.black,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.w600),
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
+                        color: NewsCubit.get(context).isDark
+                            ? Colors.grey.shade300
+                            : Colors.grey,
+                        fontSize: 15.0,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '${article['publishedAt']}',
-                    style: TextStyle(
-                      color: NewsCubit.get(context).isDark
-                          ? Colors.grey.shade300
-                          : Colors.grey,
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 Widget articleBuilder(list, context, {isSearch = false}) => ConditionalBuilder(
